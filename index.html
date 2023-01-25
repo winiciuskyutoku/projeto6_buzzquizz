@@ -1,12 +1,111 @@
 <!DOCTYPE html>
-<html lang="pt-Br">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BuzzQuizz</title>
+    <title>Document</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    
+    <header>
+        <h1>
+            Buzzquizz
+        </h1>
+    </header>
+    <main class="gabriela">
+        <div class="ondeficacriarquizz"> <!-- mostrar apenas se não tem nenhum quizz feito-->
+            <h2>
+                Você não criou nenhum quizz ainda :(
+            </h2>
+            <button class="criarquizz" onclick="criarQuizz()">Criar Quizz</button>
+        </div>
+        <div class="seusquizzes"> <!-- mostrar apenas se tiver feito algum quizz-->
+            <div class="h3">
+                <h3>
+                    Seus Quizzes
+                </h3>
+                <div class="adicionar" onclick="criarQuizz()">
+                    <ion-icon name="add-circle"></ion-icon>
+                </div>
+            </div>
+            <div class="quizzes">
+                <div class="quizz">
+                    <h4>
+                        Chamada do quizz aqui!
+                    </h4>
+                </div>
+                <div class="quizz">
+                    <h4>
+                        Chamada do quizz aqui!
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="todososquizzes column">
+            <h3>
+                Todos os Quizzes
+            </h3>
+            <div class="quizzes">
+                <div class="quizz">
+                    <h4>
+                        Chamada do quizz aqui!
+                    </h4>
+                </div>
+                <div class="quizz">
+                    <h4>
+                        Chamada do quizz aqui!
+                    </h4>
+                </div>
+                <div class="quizz">
+                    <h4>
+                        Chamada do quizz aqui!
+                    </h4>
+                </div>
+                <div class="quizz">
+                    <h4>
+                        Chamada do quizz aqui!
+                    </h4>
+                </div>
+                <div class="quizz">
+                    <h4>
+                        Chamada do quizz aqui!
+                    </h4>
+                </div>
+                <div class="quizz">
+                    <h4>
+                        Chamada do quizz aqui!
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </main>
+    <main class="criarQuizz">
+        <div class="criarQuizz2">
+            <div>
+                <h1 class="criarQuizzTitulo">Comece pelo começo</h1>
+            </div>
+            <div class="criarQuizzPerguntas">
+                <input class="infoQuizzTitulo" type="text" placeholder="Titulo do seu quizz">
+                <input class="infoQuizzImg" type="text" placeholder="URL da imagem do quizz">
+                <input class="infoQuizzQuantidade" type="text" placeholder="Quantidade de perguntas do quizz">
+                <input class="infoQuizzNiveis" type="text" placeholder="Qunatidades de niveis do quizz">
+            </div>
+            <button class="infoBasica" onclick="infoBasicaQuizz()">Prosseguir pra criar perguntas</button>
+        </div>
+    </main>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
