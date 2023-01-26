@@ -62,7 +62,8 @@ function obterQuizzes() {
   promise.then(obteveQuizzes);
   promise.catch(erroAoObterQuizzes);
 }
-
+let idQuizzSelecionado = 0;
+let idQuizzes = [];
 let quizzesInfo = [];
 function obteveQuizzes(resposta) {
   quizzesInfo = resposta.data;
@@ -74,37 +75,40 @@ function erroAoObterQuizzes(erro) {
   console.log(erro);
 }
 obterQuizzes();
-let idQuizzes = [];
+
 function renderizarQuizzes() {
   const containerQuizzes = document.querySelector(".todososquizzes .quizzes");
   containerQuizzes.innerHTML = " ";
   for (let i = 0; i < quizzesInfo.length; i++) {
     containerQuizzes.innerHTML += `
-    <div onclick="apareceTela2(this)" class="quizz">
-    <h4>${quizzesInfo[i].title}</h4>
-    <img src="${quizzesInfo[i].image}">
+    <div onclick="apareceTela2(this)" class="quizz" data-id="${quizzesInfo[i].id}">
+    <h4 class="titulo-quizz">${quizzesInfo[i].title}</h4>
+    <img class="img-quizz" src="${quizzesInfo[i].image}">
     </div>      
     `;
     idQuizzes.push(quizzesInfo[i].id);
   }
   return idQuizzes;
 }
-let quizz = [];
-function dadosPaginaDoQuizz() {}
 
 function apareceTela2(elemento) {
   const containerQuizzes = document.querySelector(".tela1");
   containerQuizzes.classList.add("esconde-tela");
-  console.log(elemento);
+  const tituloQuizzSelecionado = elemento.querySelector(".titulo-quizz");
+  const imgQuizzSelecionado = elemento.querySelector(".img-quizz");
+  const imgQuirzzSelecionadoSRC = imgQuizzSelecionado.getAttribute("src");
   const containerPaginaDoQuizz = document.querySelector(".tela2");
-  const aux = elemento.innerHTML;
-  console.log(aux);
 
+  containerPaginaDoQuizz.innerHTML = "";
   containerPaginaDoQuizz.innerHTML += `
   <div class="banner">
-    <img
-      src="./imagens/jason-leung-ztQyd2PGrNI-unsplash.jpg"alt="banner"/>
-    <h1>Título</h1>
+    <div class="layer"></div>
+    <img src="${imgQuirzzSelecionadoSRC}"/>
+    <h1>${tituloQuizzSelecionado.innerHTML}</h1>
   </div>
   `;
+
+  idQuizzSelecionado = elemento.getAttribute("data-id");
 }
+
+console.log(idQuizzSelecionado);

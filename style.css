@@ -296,16 +296,42 @@ ion-icon {
   flex-direction: column;
   align-items: center;
 }
+.banner {
+  display: flex;
+  justify-content: center;
+}
 .banner img {
-  width: 1600px;
-  height: 227px;
+  min-width: 100vw;
+  max-height: 227px;
+  margin-bottom: 70px;
+  position: relative;
+  top: 0px;
+  left: 0px;
   object-fit: cover;
+}
+.banner .layer {
+  width: 100vw;
+  height: 227px;
+  position: absolute;
   background-image: linear-gradient(
     0deg,
     rgba(0, 0, 0, 0.57),
     rgba(0, 0, 0, 0.57)
   );
-  margin-bottom: 70px;
+  z-index: 1;
+  top: 69px;
+  left: 0px;
+}
+.banner h1 {
+  position: absolute;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 39px;
+  line-height: 46px;
+  color: #ffffff;
+  z-index: 2;
+  top: 156px;
 }
 .paginaDeUmQuizz .perguntas {
   width: 759px;
