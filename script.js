@@ -74,21 +74,37 @@ function erroAoObterQuizzes(erro) {
   console.log(erro);
 }
 obterQuizzes();
-console.log(quizzesInfo);
+let idQuizzes = [];
 function renderizarQuizzes() {
   const containerQuizzes = document.querySelector(".todososquizzes .quizzes");
   containerQuizzes.innerHTML = " ";
   for (let i = 0; i < quizzesInfo.length; i++) {
     containerQuizzes.innerHTML += `
-    <div onclick="apareceTela2()" class="quizz">
+    <div onclick="apareceTela2(this)" class="quizz">
     <h4>${quizzesInfo[i].title}</h4>
     <img src="${quizzesInfo[i].image}">
     </div>      
     `;
+    idQuizzes.push(quizzesInfo[i].id);
   }
+  return idQuizzes;
 }
+let quizz = [];
+function dadosPaginaDoQuizz() {}
 
-function apareceTela2() {
+function apareceTela2(elemento) {
   const containerQuizzes = document.querySelector(".tela1");
   containerQuizzes.classList.add("esconde-tela");
+  console.log(elemento);
+  const containerPaginaDoQuizz = document.querySelector(".tela2");
+  const aux = elemento.innerHTML;
+  console.log(aux);
+
+  containerPaginaDoQuizz.innerHTML += `
+  <div class="banner">
+    <img
+      src="./imagens/jason-leung-ztQyd2PGrNI-unsplash.jpg"alt="banner"/>
+    <h1>Título</h1>
+  </div>
+  `;
 }

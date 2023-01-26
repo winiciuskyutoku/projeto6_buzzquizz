@@ -24,7 +24,7 @@ header h1 {
   color: #ffffff;
 }
 
-main .gabriela {
+main .tela1 {
   height: 90vh;
   width: 100%;
   display: flex;
@@ -288,6 +288,56 @@ ion-icon {
   font-family: "Roboto", sans-serif;
 }
 
+/*------------estilização página de um quizz-----------------*/
+.paginaDeUmQuizz {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.banner img {
+  width: 1600px;
+  height: 227px;
+  object-fit: cover;
+  background-image: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.57),
+    rgba(0, 0, 0, 0.57)
+  );
+  margin-bottom: 70px;
+}
+.paginaDeUmQuizz .perguntas {
+  width: 759px;
+  height: 1000px;
+  background-color: #ec362d;
+  display: flex;
+}
+
+.paginaDeUmQuizz .perguntas .pergunta {
+  width: 759px;
+  height: 676px;
+  background-color: steelblue;
+  position: relative;
+}
+.paginaDeUmQuizz .perguntas .pergunta h2 {
+  width: 687px;
+  height: 138px;
+  background-color: aquamarine;
+  position: absolute;
+  top: 28px;
+  left: 34px;
+  text-align: center;
+  margin-bottom: 18px;
+}
+.paginaDeUmQuizz .perguntas .pergunta .opcoes {
+  height: 480px;
+  background-color: darkseagreen;
+  width: 690px;
+  position: absolute;
+  bottom: 20px;
+  left: 33px;
+}
 @media screen and (max-width: 1100px) {
   .criarQuizz h1 {
     font-size: 20px;
