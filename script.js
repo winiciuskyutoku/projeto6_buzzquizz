@@ -37,6 +37,15 @@ function crieSuasPerguntas() {
     questions: [],
     levels: [],
   };
+}
+
+function crieSuasPerguntas() {
+  objetoPrincipal = {
+    title: titulo,
+    image: img,
+    questions: [],
+    levels: [],
+  };
 
   document.querySelector(".criarQuizz2").innerHTML = "";
 
@@ -350,3 +359,44 @@ function apareceTela2(elemento) {
 }
 
 console.log(idQuizzSelecionado);
+
+let arrayTeste = [];
+
+function abrirJanelaSucesso() {
+  verificarRespostasNiveis();
+
+  for (let indice = 0; indice < objetoPrincipal.levels.length; indice++) {
+    arrayTeste.push(objetoPrincipal.levels[indice].minValue);
+  }
+
+  if (arrayTeste.includes(0)) {
+    document.querySelector(".criarQuizz2").innerHTML = "";
+
+    const quizzTitulo = document.querySelector(".criarQuizz2");
+    quizzTitulo.innerHTML = `
+            <div>
+                <h1 class="criarQuizzTitulo">Seu quizz está pronto</h1>
+            </div>
+            <div class="sucessoImagemQuizz">
+                <img src="${objetoPrincipal.image}">
+                <span>${objetoPrincipal.title}</span>
+            </div>
+            <button class="buttonIrParaQuizz" >Acessar Quizz</button>
+            <h3>Voltar para home</h3>
+        `;
+
+    let promise = axios.post(
+      "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",
+      objetoPrincipal
+    );
+    promise.then(sucesso);
+    promise.catch(fail);
+  } else {
+    alert("deu tudo errado");
+    objetoPrincipal.levels.length = 0;
+  }
+}
+
+const sucesso = () => console.log("oi");
+
+const fail = () => console.log("deu errrado o axios");
