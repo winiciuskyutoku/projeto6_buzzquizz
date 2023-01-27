@@ -309,7 +309,7 @@ function obterQuizzes() {
   promise.then(obteveQuizzes);
   promise.catch(erroAoObterQuizzes);
 }
-let idQuizzSelecionado = 0;
+let idQuizzSelecionado = [];
 let idQuizzes = [];
 let quizzesInfo = [];
 function obteveQuizzes(resposta) {
@@ -355,10 +355,9 @@ function apareceTela2(elemento) {
   </div>
   `;
 
-  idQuizzSelecionado = elemento.getAttribute("data-id");
+  idQuizzSelecionado.push(elemento.getAttribute("data-id"));
+  console.log(idQuizzSelecionado);
 }
-
-console.log(idQuizzSelecionado);
 
 let arrayTeste = [];
 
@@ -400,3 +399,45 @@ function abrirJanelaSucesso() {
 const sucesso = () => console.log("oi");
 
 const fail = () => console.log("deu errrado o axios");
+
+function criarQuizz() {
+  const body = document.querySelector("body");
+  body.innerHTML = `
+  <header>
+    <h1>Buzzquizz</h1>
+  </header>
+  <main class="criarQuizz tela3">
+     <div class="criarQuizz2">
+        <div>
+          <h1 class="criarQuizzTitulo">Comece pelo começo</h1>
+        </div>
+        <div class="criarQuizzPerguntas">
+          <input
+            class="infoQuizzTitulo"
+            type="text"
+            placeholder="Titulo do seu quizz"
+          />
+          <input
+            class="infoQuizzImg"
+            type="text"
+            placeholder="URL da imagem do quizz"
+          />
+          <input
+            class="infoQuizzQuantidade"
+            type="text"
+            placeholder="Quantidade de perguntas do quizz"
+          />
+          <input
+            class="infoQuizzNiveis"
+            type="text"
+            placeholder="Qunatidades de niveis do quizz"
+          />
+        </div>
+        <button class="infoBasica" onclick="infoBasicaQuizz()">
+          Prosseguir pra criar perguntas
+        </button>
+      </div>
+    </main>
+  
+  `;
+}
