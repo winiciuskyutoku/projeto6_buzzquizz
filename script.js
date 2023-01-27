@@ -309,7 +309,7 @@ function obterQuizzes() {
   promise.then(obteveQuizzes);
   promise.catch(erroAoObterQuizzes);
 }
-let idQuizzSelecionado = [];
+
 let idQuizzes = [];
 let quizzesInfo = [];
 function obteveQuizzes(resposta) {
@@ -339,24 +339,70 @@ function renderizarQuizzes() {
 }
 
 function apareceTela2(elemento) {
-  const containerQuizzes = document.querySelector(".tela1");
-  containerQuizzes.classList.add("esconde-tela");
   const tituloQuizzSelecionado = elemento.querySelector(".titulo-quizz");
   const imgQuizzSelecionado = elemento.querySelector(".img-quizz");
   const imgQuirzzSelecionadoSRC = imgQuizzSelecionado.getAttribute("src");
-  const containerPaginaDoQuizz = document.querySelector(".tela2");
+  const containerPaginaDoQuizz = document.querySelector("body");
 
   containerPaginaDoQuizz.innerHTML = "";
   containerPaginaDoQuizz.innerHTML += `
-  <div class="banner">
-    <div class="layer"></div>
-    <img src="${imgQuirzzSelecionadoSRC}"/>
-    <h1>${tituloQuizzSelecionado.innerHTML}</h1>
-  </div>
+  <header>
+    <h1>Buzzquizz</h1>
+  </header>
+  <main class="paginaDeUmQuizz tela2">  
+    <div class="banner">
+      <div class="layer"></div>
+      <img src="${imgQuirzzSelecionadoSRC}"/>
+      <h1>${tituloQuizzSelecionado.innerHTML}</h1>
+    </div>
+  </main>
   `;
+  console.log(elemento.getAttribute("data-id"));
+  const pegarQuizzSelecionado = axios.get(
+    `https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${elemento.getAttribute(
+      "data-id"
+    )}`
+  );
+  pegarQuizzSelecionado.then(pegouQuizz);
+  pegarQuizzSelecionado.catch(naoPegouQuizz);
+}
 
-  idQuizzSelecionado.push(elemento.getAttribute("data-id"));
-  console.log(idQuizzSelecionado);
+const randomizaRespostas = [];
+function pegouQuizz(resposta) {
+  console.log(resposta.data.questions[0].answers);
+  let container = document.querySelector("body .paginaDeUmQuizz");
+  let containerOpcoes = document.querySelector(".pergunta .opcoes");
+  for (let i = 0; i < resposta.data.questions.length; i++) {
+    console.log(resposta.data.questions[i].title);
+    container.innerHTML += `
+    <div class="perguntas">
+    <div class="pergunta">
+    <div><h2>${resposta.data.questions[i].title}</h2></div>
+    <div class="opcoes"></div>
+    </div>
+    </div>
+    `;
+  }
+  for (let j = 0; j < resposta.data.questions.length; j++) {
+    const aux = resposta.data.questions[j].answers.sort(comparador);
+    console.log(aux);
+    for (let k = 0; k < aux.length; k++) {
+      containerOpcoes.innerHTML += `
+      <div>
+        <img src="${aux[k].image}">
+        <p>${aux[k].text}</p>
+      </div>
+      `;
+    }
+  }
+}
+
+function naoPegouQuizz(erro) {
+  console.log(erro);
+}
+
+function comparador() {
+  return Math.random() - 0.5;
 }
 
 let arrayTeste = [];

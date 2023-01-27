@@ -336,33 +336,35 @@ ion-icon {
 .paginaDeUmQuizz .perguntas {
   width: 759px;
   height: 1000px;
-  background-color: #ec362d;
   display: flex;
+  margin-top: 42px;
 }
 
 .paginaDeUmQuizz .perguntas .pergunta {
   width: 759px;
   height: 676px;
-  background-color: steelblue;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 .paginaDeUmQuizz .perguntas .pergunta h2 {
   width: 687px;
   height: 138px;
   background-color: aquamarine;
-  position: absolute;
-  top: 28px;
-  left: 34px;
+
   text-align: center;
   margin-bottom: 18px;
 }
 .paginaDeUmQuizz .perguntas .pergunta .opcoes {
   height: 480px;
+  width: 100vw;
   background-color: darkseagreen;
   width: 690px;
-  position: absolute;
-  bottom: 20px;
-  left: 33px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.opcoes img {
+  width: 329.91px;
+  height: 175.2px;
 }
 @media screen and (max-width: 1100px) {
   .criarQuizz h1 {
