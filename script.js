@@ -369,22 +369,37 @@ function apareceTela2(elemento) {
 
 const randomizaRespostas = [];
 function pegouQuizz(resposta) {
-  console.log(resposta.data.questions[0].answers);
+  
   let container = document.querySelector("body .paginaDeUmQuizz");
-  let containerOpcoes = document.querySelector(".pergunta .opcoes");
+  
   for (let i = 0; i < resposta.data.questions.length; i++) {
+    console.log(resposta.data.questions[i].answers);
+    const aux = resposta.data.questions[i].answers.sort(comparador);
     console.log(resposta.data.questions[i].title);
     container.innerHTML += `
     <div class="perguntas">
-    <div class="pergunta">
-    <div><h2>${resposta.data.questions[i].title}</h2></div>
-    <div class="opcoes"></div>
-    </div>
+        <div class="pergunta">
+            <div><h2>${resposta.data.questions[i].title}</h2></div>
+            <div class="opcoes" id="opcoes${i + 1}">
+                
+            </div>
+        </div>
     </div>
     `;
+
+    for (let j = 0; j < resposta.data.questions[i].answers.length; j++) {
+        console.log(j);
+        let containerOpcoes = document.getElementById(`opcoes${i +  1}`);
+        containerOpcoes.innerHTML += `
+            <div>
+                <img src="${aux[j].image}">
+                <p>${aux[j].text}</p>
+            </div>
+      `;
+    }
   }
-  for (let j = 0; j < resposta.data.questions.length; j++) {
-    const aux = resposta.data.questions[j].answers.sort(comparador);
+ /*  for (let j = 0; j < resposta.data.questions.length; j++) {
+    
     console.log(aux);
     for (let k = 0; k < aux.length; k++) {
       containerOpcoes.innerHTML += `
@@ -394,7 +409,7 @@ function pegouQuizz(resposta) {
       </div>
       `;
     }
-  }
+  } */
 }
 
 function naoPegouQuizz(erro) {
