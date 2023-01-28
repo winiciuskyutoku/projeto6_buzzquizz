@@ -1,3 +1,5 @@
+const quizzesCriados = [];
+let idQuizzes = [];
 let objetoPrincipal = {};
 
 function infoBasicaQuizz() {
@@ -310,7 +312,6 @@ function obterQuizzes() {
   promise.catch(erroAoObterQuizzes);
 }
 
-let idQuizzes = [];
 let quizzesInfo = [];
 function obteveQuizzes(resposta) {
   quizzesInfo = resposta.data;
@@ -323,17 +324,17 @@ function erroAoObterQuizzes(erro) {
 }
 obterQuizzes();
 
-function renderizarQuizzes() {
+function renderizarQuizzes(lista) {
   const containerQuizzes = document.querySelector(".todososquizzes .quizzes");
   containerQuizzes.innerHTML = " ";
-  for (let i = 0; i < quizzesInfo.length; i++) {
+  for (let i = 0; i < lista.length; i++) {
     containerQuizzes.innerHTML += `
-    <div onclick="apareceTela2(this)" class="quizz" data-id="${quizzesInfo[i].id}">
-    <h4 class="titulo-quizz">${quizzesInfo[i].title}</h4>
-    <img class="img-quizz" src="${quizzesInfo[i].image}">
+    <div onclick="apareceTela2(this)" class="quizz" data-id="${lista[i].id}">
+    <h4 class="titulo-quizz">${lista[i].title}</h4>
+    <img class="img-quizz" src="${lista[i].image}">
     </div>      
     `;
-    idQuizzes.push(quizzesInfo[i].id);
+    idQuizzes.push(lista[i].id);
   }
   return idQuizzes;
 }
@@ -397,9 +398,8 @@ respostaclicada.classList.remove('resposta')
 
 const randomizaRespostas = [];
 function pegouQuizz(resposta) {
-  
   let container = document.querySelector("body .paginaDeUmQuizz");
-  
+
   for (let i = 0; i < resposta.data.questions.length; i++) {
    // console.log(resposta.data.questions[i].answers);
     const aux = resposta.data.questions[i].answers.sort(comparador);
@@ -457,7 +457,7 @@ function abrirJanelaSucesso() {
                 <span>${objetoPrincipal.title}</span>
             </div>
             <button class="buttonIrParaQuizz" >Acessar Quizz</button>
-            <h3>Voltar para home</h3>
+            <button onclick="listaQuizzUsuario()"<h3>Voltar para home</h3><button/>
         `;
 
     let promise = axios.post(
@@ -517,3 +517,62 @@ function criarQuizz() {
   
   `;
 }
+
+let dadosDeserializados;
+let containerSeusQuizzes;
+let listaSerializada;
+
+function listaQuizzUsuario() {
+  listaSerializada = localStorage.getItem("lista");
+  dadosDeserializados = JSON.parse(listaSerializada);
+  console.log(dadosDeserializados);
+  containerSeusQuizzes = document.querySelector("body");
+  console.log(containerSeusQuizzes);
+  containerSeusQuizzes.innerHTML = " ";
+
+  obterQuizzes();
+
+  for (let i = 0; i < dadosDeserializados.length; i++) {
+    containerSeusQuizzes.innerHTML += `
+    <header>
+      <h1>Buzzquizz</h1>
+    </header>
+    <main class="tela1" on>
+      <div class="seusquizzes">
+        <div class="h3">
+          <h3>Seus Quizzes</h3>
+          <div class="adicionar" onclick="criarQuizz()">
+            <ion-icon name="add-circle"></ion-icon>
+          </div>
+        </div>
+        <div class="quizzes">
+            <div onclick="apareceTela2(this)" class="quizz" data-id="${dadosDeserializados[i].id}">
+                <h4 class="titulo-quizz">${dadosDeserializados[i].title}</h4>
+                <img class="img-quizz" src="${dadosDeserializados[i].image}">
+            </div>
+        </div>
+      </div>
+      <div class="todososquizzes column">
+        <h3>Todos os Quizzes</h3>
+        <div class="quizzes"></div>
+      </div>
+    </main>     
+    `;
+    idQuizzes.push(dadosDeserializados[i].id);
+  }
+}
+
+listaQuizzUsuario()
+/* function renderizarMeusQuizzes(){
+    let meusQuizzesCriados = document.querySelector(".quizzes");
+    for(let i = 0; i < dadosDeserializados.length; i++){
+        meusQuizzesCriados.innerHTML += `
+        <div onclick="apareceTela2(this)" class="quizz" data-id="${dadosDeserializados[i].id}">
+            <h4 class="titulo-quizz">${dadosDeserializados[i].title}</h4>
+            <img class="img-quizz" src="${dadosDeserializados[i].image}">
+        </div>
+    `;
+    }
+}
+
+renderizarMeusQuizzes() */
