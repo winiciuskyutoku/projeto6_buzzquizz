@@ -472,6 +472,8 @@ function abrirJanelaSucesso() {
   }
 }
 
+/* parte de renderizar as respostas criadas pelo usuario */
+
 
 let dadosSerializados;
 
