@@ -369,7 +369,11 @@ function apareceTela2(elemento) {
 
 
 
-
+/* gab aqui: aqui abaixo \/ tem as alterações
+ que fiz pra que as respostas se comportem. isso aqui faz com que:
+  a resposta clicada fique opaca, as nao clicadas fiquem um pouco translucidas,
+  os textos das corretas fiquem verdes, o das erradas vermelhos,
+  tem um scroll automatico para a proxima pergunta, e nao da pra mudar a resposta apos clicado*/
 function testerespostas(respostaclicada){
 let caixaDasRespostas = respostaclicada.parentNode;
 caixaDasRespostas.classList.add('teste')
@@ -387,6 +391,9 @@ respostaclicada.classList.remove('resposta')
     proximaPergunta.scrollIntoView()}  
     , 2000);
 }
+
+
+
 
 const randomizaRespostas = [];
 function pegouQuizz(resposta) {
@@ -418,20 +425,8 @@ function pegouQuizz(resposta) {
       `;
     }
   }
- /*  for (let j = 0; j < resposta.data.questions.length; j++) {
-    
-    console.log(aux);
-    for (let k = 0; k < aux.length; k++) {
-      containerOpcoes.innerHTML += `
-      <div>
-        <img src="${aux[k].image}">
-        <p>${aux[k].text}</p>
-      </div>
-      `;
-    }
-  } */
 }
-
+/* gab aqui: aqui acaba as baguncinhas que fiz no codigo /\  */
 function naoPegouQuizz(erro) {
   console.log(erro);
 }
@@ -488,7 +483,7 @@ function criarQuizz() {
     <h1>Buzzquizz</h1>
   </header>
   <main class="criarQuizz tela3">
-     <div class="criarQuizz2">
+      <div class="criarQuizz2">
         <div>
           <h1 class="criarQuizzTitulo">Comece pelo começo</h1>
         </div>
