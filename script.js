@@ -305,17 +305,15 @@ function verificarRespostasNiveis() {
 /*obtenção de quizzes*/
 
 function obterQuizzes() {
-  const promise = axios.get(
-    "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
-  );
+  const promise = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
   promise.then(obteveQuizzes);
   promise.catch(erroAoObterQuizzes);
 }
 
 let quizzesInfo = [];
 function obteveQuizzes(resposta) {
-  quizzesInfo = resposta.data;
-//  console.log(quizzesInfo);
+  quizzesInfo = resposta.data
+  console.log(quizzesInfo);
   renderizarQuizzes();
 }
 
@@ -324,17 +322,20 @@ function erroAoObterQuizzes(erro) {
 }
 obterQuizzes();
 
-function renderizarQuizzes(lista) {
-  const containerQuizzes = document.querySelector(".todososquizzes .quizzes");
+
+let containerQuizzes;
+
+function renderizarQuizzes(lista) { 
+  containerQuizzes = document.querySelector(".todososquizzes .quizzes");
   containerQuizzes.innerHTML = " ";
-  for (let i = 0; i < lista.length; i++) {
+  for (let i = 0; i < quizzesInfo.length; i++) {
     containerQuizzes.innerHTML += `
-    <div onclick="apareceTela2(this)" class="quizz" data-id="${lista[i].id}">
-    <h4 class="titulo-quizz">${lista[i].title}</h4>
-    <img class="img-quizz" src="${lista[i].image}">
+    <div onclick="apareceTela2(this)" class="quizz" data-id="${quizzesInfo [i].id}">
+      <h4 class="titulo-quizz">${quizzesInfo [i].title}</h4>
+      <img class="img-quizz" src="${quizzesInfo[i].image}">
     </div>      
     `;
-    idQuizzes.push(lista[i].id);
+    idQuizzes.push(quizzesInfo [i].id);
   }
   return idQuizzes;
 }
@@ -539,7 +540,7 @@ function listaQuizzUsuario() {
   console.log(containerSeusQuizzes);
   containerSeusQuizzes.innerHTML = " ";
 
-  obterQuizzes();
+  
 
   for (let i = 0; i < dadosDeserializados.length; i++) {
     containerSeusQuizzes.innerHTML += `
@@ -563,15 +564,22 @@ function listaQuizzUsuario() {
       </div>
       <div class="todososquizzes column">
         <h3>Todos os Quizzes</h3>
-        <div class="quizzes"></div>
+        <div class="quizzes">
+        
+        </div>
       </div>
     </main>     
     `;
+
+    
+    obteveQuizzes();
+    
     idQuizzes.push(dadosDeserializados[i].id);
   }
 }
 
-listaQuizzUsuario()
+listaQuizzUsuario();
+
 /* function renderizarMeusQuizzes(){
     let meusQuizzesCriados = document.querySelector(".quizzes");
     for(let i = 0; i < dadosDeserializados.length; i++){
