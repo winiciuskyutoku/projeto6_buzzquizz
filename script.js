@@ -446,23 +446,7 @@ function abrirJanelaSucesso() {
   if (arrayTeste.includes(0)) {
     document.querySelector(".criarQuizz2").innerHTML = "";
 
-    const quizzTitulo = document.querySelector(".criarQuizz2");
-    quizzTitulo.innerHTML = `
-            <div>
-                <h1 class="criarQuizzTitulo">Seu quizz está pronto</h1>
-            </div>
-            <div class="sucessoImagemQuizz">
-                <img src="${objetoPrincipal.image}">
-                <span>${objetoPrincipal.title}</span>
-            </div>
-            <button class="buttonIrParaQuizz" >Acessar Quizz</button>
-            <button onclick="listaQuizzUsuario()"<h3>Voltar para home</h3><button/>
-        `;
-
-    let promise = axios.post(
-      "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",
-      objetoPrincipal
-    );
+    let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",objetoPrincipal);
     promise.then(sucesso);
     promise.catch(fail);
   } else {
@@ -480,7 +464,52 @@ function sucesso(resposta) {
   quizzesCriados.push(resposta.data);
   dadosSerializados = JSON.stringify(quizzesCriados);
   localStorage.setItem("lista", dadosSerializados);
+
+  const quizzTitulo = document.querySelector(".criarQuizz2");
+    quizzTitulo.innerHTML = `
+            <div>
+                <h1 class="criarQuizzTitulo">Seu quizz está pronto</h1>
+            </div>
+            <div onclick="apareceTela2(this)" class="sucessoImagemQuizz" data-id="${resposta.data.id}">
+                <h4 class="titulo-quizz">${objetoPrincipal.title}</h4>
+                <img class="img-quizz" src="${objetoPrincipal.image}">
+            </div>  
+            <button class="buttonIrParaQuizz" onclick="apareceTela2Botao(this)" data-id="${resposta.data.id}">Acessar Quizz</button>
+            <button onclick="listaQuizzUsuario()" class="botaoIrParaHome"><h3>Voltar para home</h3></button>
+
+        `;
+
 }
+
+function apareceTela2Botao(elementos){
+  const tituloQuizzSelecionado = document.querySelector(".titulo-quizz");
+  const imgQuizzSelecionado = document.querySelector(".img-quizz");
+  const imgQuirzzSelecionadoSRC = imgQuizzSelecionado.getAttribute("src");
+  const containerPaginaDoQuizz = document.querySelector("body");
+
+  containerPaginaDoQuizz.innerHTML = "";
+  containerPaginaDoQuizz.innerHTML += `
+  <header>
+    <h1>Buzzquizz</h1>
+  </header>
+  <main class="paginaDeUmQuizz tela2">  
+    <div class="banner">
+      <div class="layer"></div>
+      <img src="${imgQuirzzSelecionadoSRC}"/>
+      <h1>${tituloQuizzSelecionado.innerHTML}</h1>
+    </div>
+  </main>
+  `;
+  //  console.log(elemento.getAttribute("data-id"));
+  const pegarQuizzSelecionado = axios.get(
+    `https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${elementos.getAttribute(
+      "data-id"
+    )}`
+  );
+  pegarQuizzSelecionado.then(pegouQuizz);
+  pegarQuizzSelecionado.catch(naoPegouQuizz);
+}
+
 
 const fail = () => console.log("deu errrado o axios");
 

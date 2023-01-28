@@ -559,7 +559,7 @@ ion-icon {
   height: auto;
 }
 
-.sucessoImagemQuizz span {
+.sucessoImagemQuizz h4 {
   position: absolute;
   font-family: "Roboto", sans-serif;
   font-size: 23px;
@@ -586,7 +586,7 @@ ion-icon {
   font-family: "Roboto", sans-serif;
 
   margin-top: 45px;
-  margin-bottom: 19px;
+  margin-bottom: 9px;
 }
 
 .criarQuizz2 h3 {
@@ -597,6 +597,24 @@ ion-icon {
   text-align: center;
 
   color: #818181;
+}
+
+.botaoIrParaHome{
+  width: 15%;
+  height: 44px;
+
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 15px;
+
+  font-size: 21px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 21px;
+  color: #fff5f4;
+  border: none;
+  font-family: "Roboto", sans-serif;
+
+  margin-bottom: 19px;
 }
 
 @media screen and (max-width: 1100px) {
@@ -613,7 +631,7 @@ ion-icon {
     position: relative;
   }
 
-  .sucessoImagemQuizz span {
+  .sucessoImagemQuizz h4 {
     position: absolute;
     font-size: 19px;
 
@@ -637,6 +655,24 @@ ion-icon {
     font-family: "Roboto", sans-serif;
 
     margin-top: 45px;
+    margin-bottom: 9px;
+  }
+
+  .botaoIrParaHome{
+    width: 58%;
+    height: 44px;
+  
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 15px;
+  
+    font-size: 21px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 21px;
+    color: #fff5f4;
+    border: none;
+    font-family: "Roboto", sans-serif;
+  
     margin-bottom: 19px;
   }
 
