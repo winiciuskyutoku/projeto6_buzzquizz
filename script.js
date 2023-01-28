@@ -213,7 +213,7 @@ function verificarRespostas() {
     objetoPrincipal.questions.length = 0;
   }
 
-  console.log(objetoRespostas);
+ // console.log(objetoRespostas);
 }
 
 function abrirJanelaCriarNiveis() {
@@ -314,7 +314,7 @@ let idQuizzes = [];
 let quizzesInfo = [];
 function obteveQuizzes(resposta) {
   quizzesInfo = resposta.data;
-  console.log(quizzesInfo);
+//  console.log(quizzesInfo);
   renderizarQuizzes();
 }
 
@@ -357,7 +357,7 @@ function apareceTela2(elemento) {
     </div>
   </main>
   `;
-  console.log(elemento.getAttribute("data-id"));
+//  console.log(elemento.getAttribute("data-id")); 
   const pegarQuizzSelecionado = axios.get(
     `https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${elemento.getAttribute(
       "data-id"
@@ -367,31 +367,51 @@ function apareceTela2(elemento) {
   pegarQuizzSelecionado.catch(naoPegouQuizz);
 }
 
+
+
+
+function testerespostas(respostaclicada){
+let caixaDasRespostas = respostaclicada.parentNode;
+caixaDasRespostas.classList.add('teste')
+respostaclicada.classList.remove('resposta')
+ if ( respostaclicada.classList.contains('resposta_false') == true){
+    respostaclicada.classList.add('respostaerrada')
+  } else {
+    respostaclicada.classList.add('respostacerta')
+  }
+  caixaDasRespostas.classList.add('desabilitado')
+  let proximo = caixaDasRespostas.parentNode;
+  let ultimo = proximo.parentNode;
+  let proximaPergunta = ultimo.nextElementSibling;
+  setTimeout(()=>{
+    proximaPergunta.scrollIntoView()}  
+    , 2000);
+}
+
 const randomizaRespostas = [];
 function pegouQuizz(resposta) {
   
   let container = document.querySelector("body .paginaDeUmQuizz");
   
   for (let i = 0; i < resposta.data.questions.length; i++) {
-    console.log(resposta.data.questions[i].answers);
+   // console.log(resposta.data.questions[i].answers);
     const aux = resposta.data.questions[i].answers.sort(comparador);
-    console.log(resposta.data.questions[i].title);
+   // console.log(resposta.data.questions[i].title);
     container.innerHTML += `
-    <div class="perguntas">
+    <div class="perguntas ">
         <div class="pergunta">
             <div><h2>${resposta.data.questions[i].title}</h2></div>
             <div class="opcoes" id="opcoes${i + 1}">
-                
             </div>
         </div>
     </div>
     `;
 
     for (let j = 0; j < resposta.data.questions[i].answers.length; j++) {
-        console.log(j);
+       // console.log(j);  LETICIA
         let containerOpcoes = document.getElementById(`opcoes${i +  1}`);
         containerOpcoes.innerHTML += `
-            <div>
+            <div onclick="testerespostas(this)" class="resposta_${aux[j].isCorrectAnswer} resposta">
                 <img src="${aux[j].image}">
                 <p>${aux[j].text}</p>
             </div>
@@ -457,7 +477,7 @@ function abrirJanelaSucesso() {
   }
 }
 
-const sucesso = () => console.log("oi");
+const sucesso = () => console.log("sucesso em postar o quizz");
 
 const fail = () => console.log("deu errrado o axios");
 

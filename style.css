@@ -1,11 +1,15 @@
 .esconde-tela {
   display: none;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 body {
   background-color: #e5e5e5;
 }
-
+.desabilitado{
+  pointer-events: none;
+}
 header {
   height: 69px;
   width: 100%;
@@ -97,6 +101,27 @@ main .tela1 {
   border-radius: 16px;
   text-align: center;
 }
+
+
+/* opacidade das rspostas */
+.avo{
+  border: 5px solid plum;
+}
+.teste{
+  border: 3px solid red;
+}
+.teste .resposta{
+  opacity: 0.3;;
+}
+
+.respostacerta p{
+  color: #009C22;
+}
+
+.respostaerrada p{
+  color:#FF4B4B;
+}
+
 
 ion-icon {
   font-size: 31px;
