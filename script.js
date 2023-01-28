@@ -503,20 +503,61 @@ function criarQuizz() {
   `;
 }
 
+let dadosDeserializados;
+let containerSeusQuizzes;
+let listaSerializada;
+
 function listaQuizzUsuario() {
-  const listaSerializada = localStorage.getItem("lista");
-  const dadosDeserializados = JSON.parse(listaSerializada);
+  listaSerializada = localStorage.getItem("lista");
+  dadosDeserializados = JSON.parse(listaSerializada);
   console.log(dadosDeserializados);
-  const containerSeusQuizzes = document.querySelector(".seusquizzes .quizzes");
+  containerSeusQuizzes = document.querySelector("body");
   console.log(containerSeusQuizzes);
   containerSeusQuizzes.innerHTML = " ";
+
+  obterQuizzes();
+
   for (let i = 0; i < dadosDeserializados.length; i++) {
     containerSeusQuizzes.innerHTML += `
-    <div onclick="apareceTela2(this)" class="quizz" data-id="${dadosDeserializados[i].id}">
-    <h4 class="titulo-quizz">${dadosDeserializados[i].title}</h4>
-    <img class="img-quizz" src="${dadosDeserializados[i].image}">
-    </div>      
+    <header>
+      <h1>Buzzquizz</h1>
+    </header>
+    <main class="tela1" on>
+      <div class="seusquizzes">
+        <div class="h3">
+          <h3>Seus Quizzes</h3>
+          <div class="adicionar" onclick="criarQuizz()">
+            <ion-icon name="add-circle"></ion-icon>
+          </div>
+        </div>
+        <div class="quizzes">
+            <div onclick="apareceTela2(this)" class="quizz" data-id="${dadosDeserializados[i].id}">
+                <h4 class="titulo-quizz">${dadosDeserializados[i].title}</h4>
+                <img class="img-quizz" src="${dadosDeserializados[i].image}">
+            </div>
+        </div>
+      </div>
+      <div class="todososquizzes column">
+        <h3>Todos os Quizzes</h3>
+        <div class="quizzes"></div>
+      </div>
+    </main>     
     `;
     idQuizzes.push(dadosDeserializados[i].id);
   }
 }
+
+listaQuizzUsuario()
+/* function renderizarMeusQuizzes(){
+    let meusQuizzesCriados = document.querySelector(".quizzes");
+    for(let i = 0; i < dadosDeserializados.length; i++){
+        meusQuizzesCriados.innerHTML += `
+        <div onclick="apareceTela2(this)" class="quizz" data-id="${dadosDeserializados[i].id}">
+            <h4 class="titulo-quizz">${dadosDeserializados[i].title}</h4>
+            <img class="img-quizz" src="${dadosDeserializados[i].image}">
+        </div>
+    `;
+    }
+}
+
+renderizarMeusQuizzes() */
