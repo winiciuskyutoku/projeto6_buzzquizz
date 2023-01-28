@@ -472,7 +472,14 @@ function abrirJanelaSucesso() {
   }
 }
 
-const sucesso = () => console.log("sucesso em postar o quizz");
+
+let dadosSerializados;
+
+function sucesso(resposta) {
+  quizzesCriados.push(resposta.data);
+  dadosSerializados = JSON.stringify(quizzesCriados);
+  localStorage.setItem("lista", dadosSerializados);
+}
 
 const fail = () => console.log("deu errrado o axios");
 
