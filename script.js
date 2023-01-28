@@ -1,6 +1,9 @@
 const quizzesCriados = [];
 let idQuizzes = [];
 let objetoPrincipal = {};
+let dadosDeserializados;
+let containerSeusQuizzes;
+let listaSerializada;
 
 function infoBasicaQuizz() {
   titulo = document.querySelector(".infoQuizzTitulo").value;
@@ -215,7 +218,7 @@ function verificarRespostas() {
     objetoPrincipal.questions.length = 0;
   }
 
- // console.log(objetoRespostas);
+  // console.log(objetoRespostas);
 }
 
 function abrirJanelaCriarNiveis() {
@@ -315,7 +318,7 @@ function obterQuizzes() {
 let quizzesInfo = [];
 function obteveQuizzes(resposta) {
   quizzesInfo = resposta.data;
-//  console.log(quizzesInfo);
+  //  console.log(quizzesInfo);
   renderizarQuizzes();
 }
 
@@ -358,7 +361,7 @@ function apareceTela2(elemento) {
     </div>
   </main>
   `;
-//  console.log(elemento.getAttribute("data-id")); 
+  //  console.log(elemento.getAttribute("data-id"));
   const pegarQuizzSelecionado = axios.get(
     `https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${elemento.getAttribute(
       "data-id"
@@ -368,42 +371,37 @@ function apareceTela2(elemento) {
   pegarQuizzSelecionado.catch(naoPegouQuizz);
 }
 
-
-
 /* gab aqui: aqui abaixo \/ tem as alterações
  que fiz pra que as respostas se comportem. isso aqui faz com que:
   a resposta clicada fique opaca, as nao clicadas fiquem um pouco translucidas,
   os textos das corretas fiquem verdes, o das erradas vermelhos,
   tem um scroll automatico para a proxima pergunta, e nao da pra mudar a resposta apos clicado*/
-function testerespostas(respostaclicada){
-let caixaDasRespostas = respostaclicada.parentNode;
-caixaDasRespostas.classList.add('teste')
-respostaclicada.classList.remove('resposta')
- if ( respostaclicada.classList.contains('resposta_false') == true){
-    respostaclicada.classList.add('respostaerrada')
+function testerespostas(respostaclicada) {
+  let caixaDasRespostas = respostaclicada.parentNode;
+  caixaDasRespostas.classList.add("teste");
+  respostaclicada.classList.remove("resposta");
+  if (respostaclicada.classList.contains("resposta_false") == true) {
+    respostaclicada.classList.add("respostaerrada");
   } else {
-    respostaclicada.classList.add('respostacerta')
+    respostaclicada.classList.add("respostacerta");
   }
-  caixaDasRespostas.classList.add('desabilitado')
+  caixaDasRespostas.classList.add("desabilitado");
   let proximo = caixaDasRespostas.parentNode;
   let ultimo = proximo.parentNode;
   let proximaPergunta = ultimo.nextElementSibling;
-  setTimeout(()=>{
-    proximaPergunta.scrollIntoView()}  
-    , 2000);
+  setTimeout(() => {
+    proximaPergunta.scrollIntoView();
+  }, 2000);
 }
-
-
-
 
 const randomizaRespostas = [];
 function pegouQuizz(resposta) {
   let container = document.querySelector("body .paginaDeUmQuizz");
 
   for (let i = 0; i < resposta.data.questions.length; i++) {
-   // console.log(resposta.data.questions[i].answers);
+    // console.log(resposta.data.questions[i].answers);
     const aux = resposta.data.questions[i].answers.sort(comparador);
-   // console.log(resposta.data.questions[i].title);
+    // console.log(resposta.data.questions[i].title);
     container.innerHTML += `
     <div class="perguntas ">
         <div class="pergunta">
@@ -415,9 +413,9 @@ function pegouQuizz(resposta) {
     `;
 
     for (let j = 0; j < resposta.data.questions[i].answers.length; j++) {
-       // console.log(j);  LETICIA
-        let containerOpcoes = document.getElementById(`opcoes${i +  1}`);
-        containerOpcoes.innerHTML += `
+      // console.log(j);  LETICIA
+      let containerOpcoes = document.getElementById(`opcoes${i + 1}`);
+      containerOpcoes.innerHTML += `
             <div onclick="testerespostas(this)" class="resposta_${aux[j].isCorrectAnswer} resposta">
                 <img src="${aux[j].image}">
                 <p>${aux[j].text}</p>
@@ -472,7 +470,13 @@ function abrirJanelaSucesso() {
   }
 }
 
-const sucesso = () => console.log("sucesso em postar o quizz");
+let dadosSerializados;
+
+function sucesso(resposta) {
+  quizzesCriados.push(resposta.data);
+  dadosSerializados = JSON.stringify(quizzesCriados);
+  localStorage.setItem("lista", dadosSerializados);
+}
 
 const fail = () => console.log("deu errrado o axios");
 
@@ -518,10 +522,6 @@ function criarQuizz() {
   `;
 }
 
-let dadosDeserializados;
-let containerSeusQuizzes;
-let listaSerializada;
-
 function listaQuizzUsuario() {
   listaSerializada = localStorage.getItem("lista");
   dadosDeserializados = JSON.parse(listaSerializada);
@@ -562,7 +562,7 @@ function listaQuizzUsuario() {
   }
 }
 
-listaQuizzUsuario()
+listaQuizzUsuario();
 /* function renderizarMeusQuizzes(){
     let meusQuizzesCriados = document.querySelector(".quizzes");
     for(let i = 0; i < dadosDeserializados.length; i++){
