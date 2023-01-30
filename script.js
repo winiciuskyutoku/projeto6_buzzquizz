@@ -379,7 +379,10 @@ function apareceTela2(elemento) {
   a resposta clicada fique opaca, as nao clicadas fiquem um pouco translucidas,
   os textos das corretas fiquem verdes, o das erradas vermelhos,
   tem um scroll automatico para a proxima pergunta, e nao da pra mudar a resposta apos clicado*/
-function testerespostas(respostaclicada) {
+  let contagemDeAcerto = 0;
+  
+  function testerespostas(respostaclicada) {
+  
   let caixaDasRespostas = respostaclicada.parentNode;
   caixaDasRespostas.classList.add("teste");
   respostaclicada.classList.remove("resposta");
@@ -387,6 +390,8 @@ function testerespostas(respostaclicada) {
     respostaclicada.classList.add("respostaerrada");
   } else {
     respostaclicada.classList.add("respostacerta");
+    contagemDeAcerto += 1;
+    console.log(contagemDeAcerto)
   }
   caixaDasRespostas.classList.add("desabilitado");
   let proximo = caixaDasRespostas.parentNode;
@@ -395,12 +400,18 @@ function testerespostas(respostaclicada) {
   setTimeout(() => {
     proximaPergunta.scrollIntoView();
   }, 2000);
+  let porcentagemFinal = Number(contagemDeAcerto/numeroDeRespostas[0])*100;
 }
 
+let numeroDeRespostas = [];
 const randomizaRespostas = [];
 function pegouQuizz(resposta) {
+  let respostasNumero = Number(resposta.data.questions.length);
+  numeroDeRespostas.push(respostasNumero);
+  console.log(Number(resposta.data.questions.length))
   let container = document.querySelector("body .paginaDeUmQuizz");
 
+  
   for (let i = 0; i < resposta.data.questions.length; i++) {
     // console.log(resposta.data.questions[i].answers);
     const aux = resposta.data.questions[i].answers.sort(comparador);
@@ -426,6 +437,20 @@ function pegouQuizz(resposta) {
       `;
     }
   }
+  container.innerHTML +=
+  `<div class="perguntas">  <h2> de acerto: Resposta final isso é um teste</h2>
+  <img src="${resposta.data.level.image}"> <p>${resposta.data.level.text}</p></div>
+
+  <button class="buttonIrParaQuizz" onclick="reiniciarQuizz(this)" data-id="${resposta.data.id}">Reiniciar Quizz</button>
+  <button onclick="listaQuizzUsuario()" class="botaoIrParaHome"><h3>Voltar para home</h3></button>`
+  
+}
+
+function reiniciarQuizz(esse){
+
+  console.log("vamos recarregar");
+  let url = window.location.href;
+  location.reload(true)
 }
 /* gab aqui: aqui acaba as baguncinhas que fiz no codigo /\  */
 function naoPegouQuizz(erro) {
