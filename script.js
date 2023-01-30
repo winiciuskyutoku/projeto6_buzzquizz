@@ -380,7 +380,12 @@ function apareceTela2(elemento) {
   os textos das corretas fiquem verdes, o das erradas vermelhos,
   tem um scroll automatico para a proxima pergunta, e nao da pra mudar a resposta apos clicado*/
   let contagemDeAcerto = 0;
+  let resultadoPorcentagem =0; // ESSE VAI SER A PORCENTAGEM USADA
   
+function mostrarResultado(){
+  alert("essa foi a última")
+}
+
   function testerespostas(respostaclicada) {
   
   let caixaDasRespostas = respostaclicada.parentNode;
@@ -400,8 +405,21 @@ function apareceTela2(elemento) {
   setTimeout(() => {
     proximaPergunta.scrollIntoView();
   }, 2000);
+
+
+  if (proximaPergunta == null){
+    mostrarResultado()
+    const promise = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes${}` )
+  }
+
   let porcentagemFinal = Number(contagemDeAcerto/numeroDeRespostas[0])*100;
+  let resultadoPorcentagem =+ porcentagemFinal;
+  console.log(resultadoPorcentagem);
 }
+
+
+
+
 
 let numeroDeRespostas = [];
 const randomizaRespostas = [];
@@ -413,9 +431,7 @@ function pegouQuizz(resposta) {
 
   
   for (let i = 0; i < resposta.data.questions.length; i++) {
-    // console.log(resposta.data.questions[i].answers);
     const aux = resposta.data.questions[i].answers.sort(comparador);
-    // console.log(resposta.data.questions[i].title);
     container.innerHTML += `
     <div class="perguntas ">
         <div class="perguntaTela2">
@@ -437,12 +453,23 @@ function pegouQuizz(resposta) {
       `;
     }
   }
-  container.innerHTML +=
-  `<div class="perguntas">  <h2> de acerto: Resposta final isso é um teste</h2>
-  <img src="${resposta.data.level.image}"> <p>${resposta.data.level.text}</p></div>
 
-  <button class="buttonIrParaQuizz" onclick="reiniciarQuizz(this)" data-id="${resposta.data.id}">Reiniciar Quizz</button>
-  <button onclick="listaQuizzUsuario()" class="botaoIrParaHome"><h3>Voltar para home</h3></button>`
+console.log(resultadoPorcentagem)
+  for (let n=0; n<resposta.data.levels.length; n++){
+    if (resultadoPorcentagem > levels[n].minValue && resultadoPorcentagem < levels[n+1].minValue){
+      container.innerHTML +=
+      `<div class="hidden resultadao">
+          <div> ${resultadoPorcentagem}% de acertos: ${resposta.data.levels[n].title} !!
+          </div>
+          <div class="flex"> <img src="${resposta.data.levels[n].image}"> <p>${resposta.data.levels[n].text}</p>
+          </div>
+      </div> 
+      <div>
+      <button></button>
+      <button></button>
+      </div>`
+    }
+    } 
   
 }
 
