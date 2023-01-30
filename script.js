@@ -370,9 +370,12 @@ function apareceTela2(elemento) {
       "data-id"
     )}`
   );
+  arrayGabi.push(elemento.getAttribute("data-id"));
   pegarQuizzSelecionado.then(pegouQuizz);
   pegarQuizzSelecionado.catch(naoPegouQuizz);
 }
+
+let arrayGabi = [];
 
 /* gab aqui: aqui abaixo \/ tem as alterações
  que fiz pra que as respostas se comportem. isso aqui faz com que:
@@ -382,11 +385,38 @@ function apareceTela2(elemento) {
   let contagemDeAcerto = 0;
   let resultadoPorcentagem =0; // ESSE VAI SER A PORCENTAGEM USADA
   
-function mostrarResultado(){
-  alert("essa foi a última")
+function mostrarResultado(resposta){
+
+    let container = document.querySelector('.paginaDeUmQuizz');
+    for (let n = 0; n < resposta.data.levels.length; n++){
+        console.log(resposta.data.levels[n].minValue);
+        if (porcentagemFinal >= resposta.data.levels[n].minValue && resultadoPorcentagem < resposta.data.levels[n++].minValue){
+          container.innerHTML +=
+          `
+          
+          <div class="resultado">
+              <div>
+                  <div class="tituloH2Resultado"> 
+                  <h2>${porcentagemFinal.toFixed(0)}% de acertos: ${resposta.data.levels[n].title} !!</h2>
+                  </div>
+              </div>
+              <div class="containerImg">
+                <div class="flex"> 
+                    <img  src="${resposta.data.levels[n].image}"> 
+                    <p >${resposta.data.levels[n].text}</p>
+                </div>
+              </div>
+          </div>
+            <button onclick="listaQuizzUsuario()" class="botaoIrParaHome"><h3>Voltar para home</h3></button>
+          
+          `
+        };
+
+       /*  porcentagemFinal = 0; */
+    }
 }
 
-  function testerespostas(respostaclicada) {
+function testerespostas(respostaclicada) {
   
   let caixaDasRespostas = respostaclicada.parentNode;
   caixaDasRespostas.classList.add("teste");
@@ -402,22 +432,22 @@ function mostrarResultado(){
   let proximo = caixaDasRespostas.parentNode;
   let ultimo = proximo.parentNode;
   let proximaPergunta = ultimo.nextElementSibling;
-  setTimeout(() => {
+ /*  setTimeout(() => {
     proximaPergunta.scrollIntoView();
   }, 2000);
+ */
 
-
-  if (proximaPergunta == null){
-    mostrarResultado()
-    const promise = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes${}` )
-  }
-
-  let porcentagemFinal = Number(contagemDeAcerto/numeroDeRespostas[0])*100;
+  porcentagemFinal = Number(contagemDeAcerto/numeroDeRespostas[0])*100;
   let resultadoPorcentagem =+ porcentagemFinal;
   console.log(resultadoPorcentagem);
+
+  if (proximaPergunta == null){
+    const promise = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${arrayGabi[0]}`);
+    promise.then(mostrarResultado);
+  }
 }
 
-
+let porcentagemFinal;
 
 
 
@@ -455,23 +485,11 @@ function pegouQuizz(resposta) {
   }
 
 console.log(resultadoPorcentagem)
-  for (let n=0; n<resposta.data.levels.length; n++){
-    if (resultadoPorcentagem > levels[n].minValue && resultadoPorcentagem < levels[n+1].minValue){
-      container.innerHTML +=
-      `<div class="hidden resultadao">
-          <div> ${resultadoPorcentagem}% de acertos: ${resposta.data.levels[n].title} !!
-          </div>
-          <div class="flex"> <img src="${resposta.data.levels[n].image}"> <p>${resposta.data.levels[n].text}</p>
-          </div>
-      </div> 
-      <div>
-      <button></button>
-      <button></button>
-      </div>`
-    }
-    } 
+   
   
 }
+
+
 
 function reiniciarQuizz(esse){
 
