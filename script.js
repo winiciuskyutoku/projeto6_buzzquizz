@@ -1,6 +1,9 @@
 const quizzesCriados = [];
 let idQuizzes = [];
 let objetoPrincipal = {};
+let dadosDeserializados;
+let containerSeusQuizzes;
+let listaSerializada;
 
 function infoBasicaQuizz() {
   titulo = document.querySelector(".infoQuizzTitulo").value;
@@ -215,7 +218,7 @@ function verificarRespostas() {
     objetoPrincipal.questions.length = 0;
   }
 
- // console.log(objetoRespostas);
+  // console.log(objetoRespostas);
 }
 
 function abrirJanelaCriarNiveis() {
@@ -305,17 +308,15 @@ function verificarRespostasNiveis() {
 /*obtenção de quizzes*/
 
 function obterQuizzes() {
-  const promise = axios.get(
-    "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
-  );
+  const promise = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
   promise.then(obteveQuizzes);
   promise.catch(erroAoObterQuizzes);
 }
 
 let quizzesInfo = [];
 function obteveQuizzes(resposta) {
-  quizzesInfo = resposta.data;
-//  console.log(quizzesInfo);
+  quizzesInfo = resposta.data
+  console.log(quizzesInfo);
   renderizarQuizzes();
 }
 
@@ -324,17 +325,20 @@ function erroAoObterQuizzes(erro) {
 }
 obterQuizzes();
 
-function renderizarQuizzes(lista) {
-  const containerQuizzes = document.querySelector(".todososquizzes .quizzes");
+
+let containerQuizzes;
+
+function renderizarQuizzes(lista) { 
+  containerQuizzes = document.querySelector(".todososquizzes .quizzes");
   containerQuizzes.innerHTML = " ";
-  for (let i = 0; i < lista.length; i++) {
+  for (let i = 0; i < quizzesInfo.length; i++) {
     containerQuizzes.innerHTML += `
-    <div onclick="apareceTela2(this)" class="quizz" data-id="${lista[i].id}">
-    <h4 class="titulo-quizz">${lista[i].title}</h4>
-    <img class="img-quizz" src="${lista[i].image}">
+    <div onclick="apareceTela2(this)" class="quizz" data-id="${quizzesInfo [i].id}">
+      <h4 class="titulo-quizz">${quizzesInfo [i].title}</h4>
+      <img class="img-quizz" src="${quizzesInfo[i].image}">
     </div>      
     `;
-    idQuizzes.push(lista[i].id);
+    idQuizzes.push(quizzesInfo [i].id);
   }
   return idQuizzes;
 }
@@ -358,7 +362,7 @@ function apareceTela2(elemento) {
     </div>
   </main>
   `;
-//  console.log(elemento.getAttribute("data-id")); 
+  //  console.log(elemento.getAttribute("data-id"));
   const pegarQuizzSelecionado = axios.get(
     `https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${elemento.getAttribute(
       "data-id"
@@ -368,42 +372,37 @@ function apareceTela2(elemento) {
   pegarQuizzSelecionado.catch(naoPegouQuizz);
 }
 
-
-
 /* gab aqui: aqui abaixo \/ tem as alterações
  que fiz pra que as respostas se comportem. isso aqui faz com que:
   a resposta clicada fique opaca, as nao clicadas fiquem um pouco translucidas,
   os textos das corretas fiquem verdes, o das erradas vermelhos,
   tem um scroll automatico para a proxima pergunta, e nao da pra mudar a resposta apos clicado*/
-function testerespostas(respostaclicada){
-let caixaDasRespostas = respostaclicada.parentNode;
-caixaDasRespostas.classList.add('teste')
-respostaclicada.classList.remove('resposta')
- if ( respostaclicada.classList.contains('resposta_false') == true){
-    respostaclicada.classList.add('respostaerrada')
+function testerespostas(respostaclicada) {
+  let caixaDasRespostas = respostaclicada.parentNode;
+  caixaDasRespostas.classList.add("teste");
+  respostaclicada.classList.remove("resposta");
+  if (respostaclicada.classList.contains("resposta_false") == true) {
+    respostaclicada.classList.add("respostaerrada");
   } else {
-    respostaclicada.classList.add('respostacerta')
+    respostaclicada.classList.add("respostacerta");
   }
-  caixaDasRespostas.classList.add('desabilitado')
+  caixaDasRespostas.classList.add("desabilitado");
   let proximo = caixaDasRespostas.parentNode;
   let ultimo = proximo.parentNode;
   let proximaPergunta = ultimo.nextElementSibling;
-  setTimeout(()=>{
-    proximaPergunta.scrollIntoView()}  
-    , 2000);
+  setTimeout(() => {
+    proximaPergunta.scrollIntoView();
+  }, 2000);
 }
-
-
-
 
 const randomizaRespostas = [];
 function pegouQuizz(resposta) {
   let container = document.querySelector("body .paginaDeUmQuizz");
 
   for (let i = 0; i < resposta.data.questions.length; i++) {
-   // console.log(resposta.data.questions[i].answers);
+    // console.log(resposta.data.questions[i].answers);
     const aux = resposta.data.questions[i].answers.sort(comparador);
-   // console.log(resposta.data.questions[i].title);
+    // console.log(resposta.data.questions[i].title);
     container.innerHTML += `
     <div class="perguntas ">
         <div class="pergunta">
@@ -415,9 +414,9 @@ function pegouQuizz(resposta) {
     `;
 
     for (let j = 0; j < resposta.data.questions[i].answers.length; j++) {
-       // console.log(j);  LETICIA
-        let containerOpcoes = document.getElementById(`opcoes${i +  1}`);
-        containerOpcoes.innerHTML += `
+      // console.log(j);  LETICIA
+      let containerOpcoes = document.getElementById(`opcoes${i + 1}`);
+      containerOpcoes.innerHTML += `
             <div onclick="testerespostas(this)" class="resposta_${aux[j].isCorrectAnswer} resposta">
                 <img src="${aux[j].image}">
                 <p>${aux[j].text}</p>
@@ -447,23 +446,7 @@ function abrirJanelaSucesso() {
   if (arrayTeste.includes(0)) {
     document.querySelector(".criarQuizz2").innerHTML = "";
 
-    const quizzTitulo = document.querySelector(".criarQuizz2");
-    quizzTitulo.innerHTML = `
-            <div>
-                <h1 class="criarQuizzTitulo">Seu quizz está pronto</h1>
-            </div>
-            <div class="sucessoImagemQuizz">
-                <img src="${objetoPrincipal.image}">
-                <span>${objetoPrincipal.title}</span>
-            </div>
-            <button class="buttonIrParaQuizz" >Acessar Quizz</button>
-            <button onclick="listaQuizzUsuario()"<h3>Voltar para home</h3><button/>
-        `;
-
-    let promise = axios.post(
-      "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",
-      objetoPrincipal
-    );
+    let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",objetoPrincipal);
     promise.then(sucesso);
     promise.catch(fail);
   } else {
@@ -472,7 +455,61 @@ function abrirJanelaSucesso() {
   }
 }
 
-const sucesso = () => console.log("sucesso em postar o quizz");
+/* parte de renderizar as respostas criadas pelo usuario */
+
+
+let dadosSerializados;
+
+function sucesso(resposta) {
+  quizzesCriados.push(resposta.data);
+  dadosSerializados = JSON.stringify(quizzesCriados);
+  localStorage.setItem("lista", dadosSerializados);
+
+  const quizzTitulo = document.querySelector(".criarQuizz2");
+    quizzTitulo.innerHTML = `
+            <div>
+                <h1 class="criarQuizzTitulo">Seu quizz está pronto</h1>
+            </div>
+            <div onclick="apareceTela2(this)" class="sucessoImagemQuizz" data-id="${resposta.data.id}">
+                <h4 class="titulo-quizz">${objetoPrincipal.title}</h4>
+                <img class="img-quizz" src="${objetoPrincipal.image}">
+            </div>  
+            <button class="buttonIrParaQuizz" onclick="apareceTela2Botao(this)" data-id="${resposta.data.id}">Acessar Quizz</button>
+            <button onclick="listaQuizzUsuario()" class="botaoIrParaHome"><h3>Voltar para home</h3></button>
+
+        `;
+
+}
+
+function apareceTela2Botao(elementos){
+  const tituloQuizzSelecionado = document.querySelector(".titulo-quizz");
+  const imgQuizzSelecionado = document.querySelector(".img-quizz");
+  const imgQuirzzSelecionadoSRC = imgQuizzSelecionado.getAttribute("src");
+  const containerPaginaDoQuizz = document.querySelector("body");
+
+  containerPaginaDoQuizz.innerHTML = "";
+  containerPaginaDoQuizz.innerHTML += `
+  <header>
+    <h1>Buzzquizz</h1>
+  </header>
+  <main class="paginaDeUmQuizz tela2">  
+    <div class="banner">
+      <div class="layer"></div>
+      <img src="${imgQuirzzSelecionadoSRC}"/>
+      <h1>${tituloQuizzSelecionado.innerHTML}</h1>
+    </div>
+  </main>
+  `;
+  //  console.log(elemento.getAttribute("data-id"));
+  const pegarQuizzSelecionado = axios.get(
+    `https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${elementos.getAttribute(
+      "data-id"
+    )}`
+  );
+  pegarQuizzSelecionado.then(pegouQuizz);
+  pegarQuizzSelecionado.catch(naoPegouQuizz);
+}
+
 
 const fail = () => console.log("deu errrado o axios");
 
@@ -518,10 +555,6 @@ function criarQuizz() {
   `;
 }
 
-let dadosDeserializados;
-let containerSeusQuizzes;
-let listaSerializada;
-
 function listaQuizzUsuario() {
   listaSerializada = localStorage.getItem("lista");
   dadosDeserializados = JSON.parse(listaSerializada);
@@ -530,7 +563,7 @@ function listaQuizzUsuario() {
   console.log(containerSeusQuizzes);
   containerSeusQuizzes.innerHTML = " ";
 
-  obterQuizzes();
+  
 
   for (let i = 0; i < dadosDeserializados.length; i++) {
     containerSeusQuizzes.innerHTML += `
@@ -554,10 +587,16 @@ function listaQuizzUsuario() {
       </div>
       <div class="todososquizzes column">
         <h3>Todos os Quizzes</h3>
-        <div class="quizzes"></div>
+        <div class="quizzes">
+        
+        </div>
       </div>
     </main>     
     `;
+
+    
+    obteveQuizzes();
+    
     idQuizzes.push(dadosDeserializados[i].id);
   }
 }
