@@ -563,7 +563,7 @@ function listaQuizzUsuario() {
 }
 
 listaQuizzUsuario()
-/* function renderizarMeusQuizzes(){
+ function renderizarMeusQuizzes(){
     let meusQuizzesCriados = document.querySelector(".quizzes");
     for(let i = 0; i < dadosDeserializados.length; i++){
         meusQuizzesCriados.innerHTML += `
@@ -575,4 +575,4 @@ listaQuizzUsuario()
     }
 }
 
-renderizarMeusQuizzes() */
+renderizarMeusQuizzes() 
