@@ -387,10 +387,14 @@ let arrayGabi = [];
   
 function mostrarResultado(resposta){
 
+    console.log(resposta.data.id)
+
     let container = document.querySelector('.paginaDeUmQuizz');
     for (let n = 0; n < resposta.data.levels.length; n++){
+        console.log(resposta.data.levels);
         console.log(resposta.data.levels[n].minValue);
-        if (porcentagemFinal >= resposta.data.levels[n].minValue && resultadoPorcentagem < resposta.data.levels[n++].minValue){
+        console.log(resposta.data.levels[n+1].minValue);
+        if (porcentagemFinal >= resposta.data.levels[n].minValue && porcentagemFinal <= resposta.data.levels[n+1].minValue){
           container.innerHTML +=
           `
           
