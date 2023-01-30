@@ -329,18 +329,20 @@ obterQuizzes();
 let containerQuizzes;
 
 function renderizarQuizzes(lista) { 
-  containerQuizzes = document.querySelector(".todososquizzes .quizzes");
-  containerQuizzes.innerHTML = " ";
-  for (let i = 0; i < quizzesInfo.length; i++) {
-    containerQuizzes.innerHTML += `
-    <div onclick="apareceTela2(this)" class="quizz" data-id="${quizzesInfo [i].id}">
-      <h4 class="titulo-quizz">${quizzesInfo [i].title}</h4>
-      <img class="img-quizz" src="${quizzesInfo[i].image}">
-    </div>      
-    `;
-    idQuizzes.push(quizzesInfo [i].id);
-  }
-  return idQuizzes;
+
+    containerQuizzes = document.querySelector(".todososquizzes .quizzes");
+    containerQuizzes.innerHTML = " ";
+    for (let i = 0; i < quizzesInfo.length; i++) {
+        containerQuizzes.innerHTML += `
+        <div onclick="apareceTela2(this)" class="quizz" data-id="${quizzesInfo [i].id}">
+        <h4 class="titulo-quizz">${quizzesInfo [i].title}</h4>
+        <img class="img-quizz" src="${quizzesInfo[i].image}">
+        </div>      
+        `;
+        idQuizzes.push(quizzesInfo [i].id);
+    }
+    return idQuizzes;
+  
 }
 
 function apareceTela2(elemento) {
@@ -405,8 +407,8 @@ function pegouQuizz(resposta) {
     // console.log(resposta.data.questions[i].title);
     container.innerHTML += `
     <div class="perguntas ">
-        <div class="pergunta">
-            <div><h2>${resposta.data.questions[i].title}</h2></div>
+        <div class="perguntaTela2">
+            <div style="background-color: ${resposta.data.questions[i].color};"><h2>${resposta.data.questions[i].title}</h2></div>
             <div class="opcoes" id="opcoes${i + 1}">
             </div>
         </div>
@@ -556,49 +558,59 @@ function criarQuizz() {
 }
 
 function listaQuizzUsuario() {
-  listaSerializada = localStorage.getItem("lista");
-  dadosDeserializados = JSON.parse(listaSerializada);
-  console.log(dadosDeserializados);
-  containerSeusQuizzes = document.querySelector("body");
-  console.log(containerSeusQuizzes);
-  containerSeusQuizzes.innerHTML = " ";
+    listaSerializada = localStorage.getItem("lista");
+    dadosDeserializados = JSON.parse(listaSerializada);
+    console.log(dadosDeserializados);
 
   
 
-  for (let i = 0; i < dadosDeserializados.length; i++) {
-    containerSeusQuizzes.innerHTML += `
-    <header>
-      <h1>Buzzquizz</h1>
-    </header>
-    <main class="tela1" on>
-      <div class="seusquizzes">
-        <div class="h3">
-          <h3>Seus Quizzes</h3>
-          <div class="adicionar" onclick="criarQuizz()">
-            <ion-icon name="add-circle"></ion-icon>
-          </div>
-        </div>
-        <div class="quizzes">
-            <div onclick="apareceTela2(this)" class="quizz" data-id="${dadosDeserializados[i].id}">
-                <h4 class="titulo-quizz">${dadosDeserializados[i].title}</h4>
-                <img class="img-quizz" src="${dadosDeserializados[i].image}">
+  if (dadosDeserializados != null || dadosDeserializados != undefined) {
+    
+    containerSeusQuizzes = document.querySelector("body");
+    console.log(containerSeusQuizzes);
+    containerSeusQuizzes.innerHTML = " ";
+
+
+    for (let i = 0; i < dadosDeserializados.length; i++) {
+        containerSeusQuizzes.innerHTML += `
+        <header>
+          <h1>Buzzquizz</h1>
+        </header>
+        <main class="tela1" on>
+          <div class="seusquizzes">
+            <div class="h3">
+              <h3>Seus Quizzes</h3>
+              <div class="adicionar" onclick="criarQuizz()">
+                <ion-icon name="add-circle"></ion-icon>
+              </div>
             </div>
-        </div>
-      </div>
-      <div class="todososquizzes column">
-        <h3>Todos os Quizzes</h3>
-        <div class="quizzes">
-        
-        </div>
-      </div>
-    </main>     
-    `;
+            <div class="quizzes">
+                <div onclick="apareceTela2(this)" class="quizz" data-id="${dadosDeserializados[i].id}">
+                    <h4 class="titulo-quizz">${dadosDeserializados[i].title}</h4>
+                    <img class="img-quizz" src="${dadosDeserializados[i].image}">
+                </div>
+            </div>
+          </div>
+          <div class="todososquizzes column">
+            <h3>Todos os Quizzes</h3>
+            <div class="quizzes">
+            
+            </div>
+          </div>
+        </main>     
+        `;
+    
+    }
 
     
-    obteveQuizzes();
+    obterQuizzes();
     
-    idQuizzes.push(dadosDeserializados[i].id);
+  idQuizzes.push(dadosDeserializados[i].id);
+  } else {
+    obterQuizzes();
   }
+
+  
 }
 
 listaQuizzUsuario();

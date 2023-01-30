@@ -120,6 +120,14 @@ main .tela1 {
   color:#FF4B4B;
 }
 
+.resposta {
+  width: 45%;
+  height: 45%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 ion-icon {
   font-size: 31px;
@@ -322,6 +330,7 @@ ion-icon {
 .banner {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 .banner img {
   min-width: 100vw;
@@ -355,40 +364,80 @@ ion-icon {
   color: #ffffff;
   z-index: 2;
   top: 156px;
+  width: 100%;
+  word-wrap: break-word;
+  text-align: center;
 }
 .paginaDeUmQuizz .perguntas {
-  width: 759px;
+  width: 52%;
   height: 1000px;
   display: flex;
   margin-top: 42px;
 }
 
-.paginaDeUmQuizz .perguntas .pergunta {
-  width: 759px;
+.paginaDeUmQuizz .perguntas .perguntaTela2 {
+  width: 100%;
   height: 676px;
   display: flex;
   flex-direction: column;
+
 }
-.paginaDeUmQuizz .perguntas .pergunta h2 {
-  width: 687px;
+
+.perguntaTela2 {
+  width: 100%;
+}
+
+
+.paginaDeUmQuizz .perguntas .perguntaTela2 h2 {
+  width: 100%;
   height: 138px;
-  background-color: aquamarine;
 
   text-align: center;
   margin-bottom: 18px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 700;
+  font-size: 23px;
+  font-family: 'Roboto', sans-serif;
+
 }
-.paginaDeUmQuizz .perguntas .pergunta .opcoes {
-  height: 480px;
-  width: 100vw;
+.opcoes {
+  height: auto;
+  width: 100%;
   background-color: darkseagreen;
-  width: 690px;
   display: flex;
   flex-wrap: wrap;
+
+  justify-content: center;
+
+  gap: 3.5%;
 }
+
+.opcoes p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+
+  text-align: left;
+  word-wrap: break-word;
+
+  width: 100%;
+
+  /* padding-left: 5%;
+  box-sizing: border-box; */
+}
+
 .opcoes img {
-  width: 329.91px;
-  height: 175.2px;
+  width: 100%;
+  height: auto;
 }
+
+
 @media screen and (max-width: 1100px) {
   .criarQuizz h1 {
     font-size: 20px;
@@ -401,6 +450,15 @@ ion-icon {
   .infoBasica {
     width: 86%;
     font-size: 18px;
+  }
+
+  .paginaDeUmQuizz .perguntas {
+    width: 100%;
+  }
+
+  .banner h1 {
+    font-size: 19px;
+    text-align: center;
   }
 }
 
