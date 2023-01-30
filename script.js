@@ -408,7 +408,7 @@ function pegouQuizz(resposta) {
     container.innerHTML += `
     <div class="perguntas ">
         <div class="perguntaTela2">
-            <div style="background-color: ${resposta.data.questions[i].color};"><h2>${resposta.data.questions[i].title}</h2></div>
+            <div style="background-color: ${resposta.data.questions[i].color};" class="tituloH2Quizz"><h2>${resposta.data.questions[i].title}</h2></div>
             <div class="opcoes" id="opcoes${i + 1}">
             </div>
         </div>
